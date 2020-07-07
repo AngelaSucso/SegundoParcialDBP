@@ -16,5 +16,12 @@
   		<input type="text" id="lname" name="lname" value="Ingresa una descripcion"><br><br>
   		<input type="submit" value="Submit">
 	</form>
+	
+	<p id="p1">Pagina Web</p>
+
+		<script>
+		document.getElementById("p1").innerHTML = "Thanks";
+		</script>
+		
 </body>
 </html>
