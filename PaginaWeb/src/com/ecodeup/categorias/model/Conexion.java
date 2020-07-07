@@ -1,4 +1,4 @@
-package com.ecodeup.articulos.model;
+package com.ecodeup.categorias.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

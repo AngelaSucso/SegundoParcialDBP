@@ -1,4 +1,4 @@
-package com.ecodeup.articulos.dao;
+package com.ecodeup.categorias.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,20 +8,20 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ecodeup.articulos.model.Articulo;
-import com.ecodeup.articulos.model.Conexion;
+import com.ecodeup.categorias.model.Categoria;
+import com.ecodeup.categorias.model.Conexion;
 
-public class ArticuloDAO {
+public class CategoriaDAO {
 	private Conexion con;
 	private Connection connection;
 
-	public ArticuloDAO(String jdbcURL, String jdbcUsername, String jdbcPassword) throws SQLException {
+	public CategoriaDAO(String jdbcURL, String jdbcUsername, String jdbcPassword) throws SQLException {
 		System.out.println(jdbcURL);
 		con = new Conexion(jdbcURL, jdbcUsername, jdbcPassword);
 	}
 
 	// insertar artículo
-	public boolean insertar(Articulo articulo) throws SQLException {
+	public boolean insertar(Categoria articulo) throws SQLException {
 		String sql = "INSERT INTO articulos (id, nombre, descripcion) VALUES (?, ?, ?,?,?,?)";
 		System.out.println(articulo.getDescripcion());
 		con.conectar();
@@ -38,9 +38,9 @@ public class ArticuloDAO {
 	}
 
 	// listar todos los productos
-	public List<Articulo> listarArticulos() throws SQLException {
+	public List<Categoria> listarArticulos() throws SQLException {
 
-		List<Articulo> listaArticulos = new ArrayList<Articulo>();
+		List<Categoria> listaArticulos = new ArrayList<Categoria>();
 		String sql = "SELECT * FROM articulos";
 		con.conectar();
 		connection = con.getJdbcConnection();
@@ -51,7 +51,7 @@ public class ArticuloDAO {
 			int id = resulSet.getInt("id");
 			String nombre = resulSet.getString("nombre");
 			String descripcion = resulSet.getString("descripcion");
-			Articulo articulo = new Articulo(id, nombre, descripcion);
+			Categoria articulo = new Categoria(id, nombre, descripcion);
 			listaArticulos.add(articulo);
 		}
 		con.desconectar();
@@ -59,8 +59,8 @@ public class ArticuloDAO {
 	}
 
 	// obtener por id
-	public Articulo obtenerPorId(int id) throws SQLException {
-		Articulo articulo = null;
+	public Categoria obtenerPorId(int id) throws SQLException {
+		Categoria articulo = null;
 
 		String sql = "SELECT * FROM articulos WHERE id= ? ";
 		con.conectar();
@@ -70,7 +70,7 @@ public class ArticuloDAO {
 
 		ResultSet res = statement.executeQuery();
 		if (res.next()) {
-			articulo = new Articulo(res.getInt("id"), res.getString("nombre"),
+			articulo = new Categoria(res.getInt("id"), res.getString("nombre"),
 					res.getString("descripcion"));
 		}
 		res.close();
@@ -80,7 +80,7 @@ public class ArticuloDAO {
 	}
 
 	// actualizar
-	public boolean actualizar(Articulo articulo) throws SQLException {
+	public boolean actualizar(Categoria articulo) throws SQLException {
 		boolean rowActualizar = false;
 		String sql = "UPDATE articulos SET codigo=?,nombre=?,descripcion=?,existencia=?, precio=? WHERE id=?";
 		con.conectar();
@@ -97,7 +97,7 @@ public class ArticuloDAO {
 	}
 	
 	//eliminar
-	public boolean eliminar(Articulo articulo) throws SQLException {
+	public boolean eliminar(Categoria articulo) throws SQLException {
 		boolean rowEliminar = false;
 		String sql = "DELETE FROM articulos WHERE ID=?";
 		con.conectar();

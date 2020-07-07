@@ -1,11 +1,11 @@
-package com.ecodeup.articulos.model;
+package com.ecodeup.categorias.model;
 
-public class Articulo {
+public class Categoria {
 	private int id;
 	private String nombre;
 	private String descripcion;
 	
-	public Articulo(int id, String nombre, String descripcion) {
+	public Categoria(int id, String nombre, String descripcion) {
 		this.id = id;
 		this.nombre = nombre;
 		this.descripcion = descripcion;

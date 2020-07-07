@@ -1,4 +1,4 @@
-package com.ecodeup.articulos.controller;
+package com.ecodeup.categorias.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -11,16 +11,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ecodeup.articulos.dao.ArticuloDAO;
-import com.ecodeup.articulos.model.Articulo;
+import com.ecodeup.categorias.dao.CategoriaDAO;
+import com.ecodeup.categorias.model.Categoria;
 
 /**
  * Servlet implementation class AdminArticulo
  */
 @WebServlet("/adminArticulo")
-public class AdminArticulo extends HttpServlet {
+public class AdminCategoria extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	ArticuloDAO articuloDAO;
+	CategoriaDAO articuloDAO;
 
 	public void init() {
 		String jdbcURL = getServletContext().getInitParameter("jdbcURL");
@@ -28,7 +28,7 @@ public class AdminArticulo extends HttpServlet {
 		String jdbcPassword = getServletContext().getInitParameter("jdbcPassword");
 		try {
 
-			articuloDAO = new ArticuloDAO(jdbcURL, jdbcUsername, jdbcPassword);
+			articuloDAO = new CategoriaDAO(jdbcURL, jdbcUsername, jdbcPassword);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -37,7 +37,7 @@ public class AdminArticulo extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AdminArticulo() {
+	public AdminCategoria() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -102,7 +102,7 @@ public class AdminArticulo extends HttpServlet {
 	}
 
 	private void registrar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-		Articulo articulo = new Articulo(0, request.getParameter("nombre"), request.getParameter("descripcion"));
+		Categoria articulo = new Categoria(0, request.getParameter("nombre"), request.getParameter("descripcion"));
 		articuloDAO.insertar(articulo);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
@@ -117,13 +117,13 @@ public class AdminArticulo extends HttpServlet {
 	
 	private void mostrar(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException , ServletException{
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/vista/mostrar.jsp");
-		List<Articulo> listaArticulos= articuloDAO.listarArticulos();
+		List<Categoria> listaArticulos= articuloDAO.listarArticulos();
 		request.setAttribute("lista", listaArticulos);
 		dispatcher.forward(request, response);
 	}	
 	
 	private void showEditar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-		Articulo articulo = articuloDAO.obtenerPorId(Integer.parseInt(request.getParameter("id")));
+		Categoria articulo = articuloDAO.obtenerPorId(Integer.parseInt(request.getParameter("id")));
 		request.setAttribute("articulo", articulo);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/vista/editar.jsp");
@@ -131,13 +131,13 @@ public class AdminArticulo extends HttpServlet {
 	}
 	
 	private void editar(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-		Articulo articulo = new Articulo(Integer.parseInt(request.getParameter("id")), request.getParameter("nombre"), request.getParameter("descripcion"));
+		Categoria articulo = new Categoria(Integer.parseInt(request.getParameter("id")), request.getParameter("nombre"), request.getParameter("descripcion"));
 		articuloDAO.actualizar(articulo);
 		index(request, response);
 	}
 	
 	private void eliminar(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-		Articulo articulo = articuloDAO.obtenerPorId(Integer.parseInt(request.getParameter("id")));
+		Categoria articulo = articuloDAO.obtenerPorId(Integer.parseInt(request.getParameter("id")));
 		articuloDAO.eliminar(articulo);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
